@@ -3,7 +3,7 @@
     It is placed in the user's site-packages directory and
     is loaded before each python process!
 """
-import os
+"""import os
 os.environ["DJANGO_SETTINGS_MODULE"] = "django.conf.global_settings"
 
 # pylint: disable=wrong-import-position
@@ -31,4 +31,4 @@ global_settings.DATABASES = {
 
 # http://django.readthedocs.org/en/latest/releases/1.7.html#standalone-scripts
 if django.VERSION >= (1, 7):
-    django.setup()
+    django.setup()"""
