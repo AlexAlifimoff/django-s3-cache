@@ -88,6 +88,7 @@ class AmazonS3Cache(BaseCache):
         self._storage = s3boto.S3BotoStorage(
             acl=_default_acl,
             bucket=_bucket_name,
+            host='s3.us-east-2.amazonaws.com',
             **self._options
         )
 
