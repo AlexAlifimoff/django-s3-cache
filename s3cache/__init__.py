@@ -48,8 +48,8 @@ class AmazonS3Cache(BaseCache):
         # This implementation of the GET operation returns some or all (up to 1000)
         # of the objects in a bucket....
 
-        if self._max_entries > 1000:
-            self._max_entries = 1000
+        #if self._max_entries > 1000:
+        #    self._max_entries = 1000
 
         self._options = params.get('OPTIONS', {})
 
@@ -184,7 +184,8 @@ class AmazonS3Cache(BaseCache):
             return
 
         try:
-            keylist = self._storage.bucket.get_all_keys(prefix=self._location)
+            #keylist = self._storage.bucket.get_all_keys(prefix=self._location)
+            keylist = list(self._storage.bucket.list(prefix=self._location))
         except (IOError, OSError):
             return
 
@@ -203,7 +204,8 @@ class AmazonS3Cache(BaseCache):
         """
             There seems to be an artificial limit of 1000
         """
-        return len(self._storage.bucket.get_all_keys(prefix=self._location))
+        #return len(self._storage.bucket.get_all_keys(prefix=self._location))
+        return len(self._storage.bucket.list(prefix=self._location))
     _num_entries = property(_get_num_entries)
 
     def clear(self):
