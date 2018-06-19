@@ -116,7 +116,7 @@ class AmazonS3Cache(BaseCache):
             finally:
                 fobj.close()
         except (IOError, OSError, EOFError, pickle.PickleError) as e:
-            logger.error("Got error in s3cache.get: ", e)
+            logger.debug("Error in get", e)
             pass
         return default
 
