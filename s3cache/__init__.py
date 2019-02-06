@@ -17,6 +17,9 @@ from storages.backends import s3boto3
 from django.core.files.base import ContentFile
 from django.core.cache.backends.base import BaseCache
 
+import logging
+logger = logging.getLogger(__name__)
+
 def _key_to_file(key):
     """
         All files go into a single flat directory because it's not easier
@@ -113,7 +116,8 @@ class AmazonS3Cache(BaseCache):
                     return pickle.load(fobj)
             finally:
                 fobj.close()
-        except (IOError, OSError, EOFError, pickle.PickleError):
+        except (IOError, OSError, EOFError, pickle.PickleError) as e:
+            logger.debug("Error in get: {}".format(e))
             pass
         return default
 
