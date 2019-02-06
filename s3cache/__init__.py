@@ -13,7 +13,7 @@ try:
 except ImportError:
     import pickle
 
-from storages.backends import s3boto
+from storages.backends import s3boto3
 from django.core.files.base import ContentFile
 from django.core.cache.backends.base import BaseCache
 
@@ -85,7 +85,8 @@ class AmazonS3Cache(BaseCache):
         for _n, _v in lowercase_options:
             self._options[_n] = _v
 
-        self._storage = s3boto.S3BotoStorage(
+        print("initializing s3 storage with options: ", self._options)
+        self._storage = s3boto3.S3Boto3Storage(
             acl=_default_acl,
             bucket=_bucket_name,
             host='s3.us-east-2.amazonaws.com',
@@ -126,7 +127,9 @@ class AmazonS3Cache(BaseCache):
 
         try:
             content = self._dump_object(value, timeout)
-            self._storage.save(fname, ContentFile(content))
+            content_file = ContentFile(content)
+            content_file.content_type = 'application/javascript';
+            self._storage.save(fname, content_file)
         except (IOError, OSError, EOFError, pickle.PickleError):
             pass
 
