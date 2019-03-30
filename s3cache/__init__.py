@@ -88,7 +88,6 @@ class AmazonS3Cache(BaseCache):
         for _n, _v in lowercase_options:
             self._options[_n] = _v
 
-        print("initializing s3 storage with options: ", self._options)
         self._storage = s3boto3.S3Boto3Storage(
             acl=_default_acl,
             bucket=_bucket_name,
